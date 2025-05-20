@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { TareaService,Tarea } from '../../services/tarea.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tarea',
@@ -82,13 +83,30 @@ export class TareaComponent implements OnInit{
     }
 
     if(!this.formTarea.titulo || !this.formTarea.descripcion || !this.formTarea.fechaEntrega){
-      alert ('Debes llenar todos los campos :)')
+      Swal.fire({
+        icon: 'error',
+        title: 'Todos los Campos Son Obligatorios',
+        confirmButtonColor: '#c0392b'
+      });
       return;
     }
 
     this.tareaService.createTarea(formData).subscribe(() =>{
       this.obtenerTareas();
       this.cerrarModal();
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Tarea Creada Con Exito.',
+        confirmButtonColor: '#27ae60'
+      });
+      }, error => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo crear la tarea.',
+        confirmButtonColor: '#c0392b'
+      });
     });
   }
 
@@ -104,7 +122,11 @@ export class TareaComponent implements OnInit{
   actualizarTarea(): void {
 
     if(!this.formTarea.titulo || !this.formTarea.descripcion || !this.formTarea.fechaEntrega){
-      alert ('Debes llenar todos los campos :)')
+      Swal.fire({
+        icon: 'error',
+        title: 'Todos los Campos Son Obligatorios',
+        confirmButtonColor: '#c0392b'
+      });
       return;
     }
 
@@ -112,6 +134,19 @@ export class TareaComponent implements OnInit{
       this.tareaService.updateTarea(this.formTarea.id, this.formTarea).subscribe(() => {
         this.obtenerTareas();
         this.cerrarModal();
+
+        Swal.fire({
+        icon: 'success',
+        title: 'Tarea Actualizada Con Exito.',
+        confirmButtonColor: '#27ae60'
+      });
+      }, error => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo crear la tarea.',
+        confirmButtonColor: '#c0392b'
+      });
       });
   }
 }
@@ -119,13 +154,43 @@ export class TareaComponent implements OnInit{
 
   eliminarTarea(id:number):void{
     this.tareaService.deleteTarea(id).subscribe(()=>{
+
       this.obtenerTareas();
+      Swal.fire({
+        icon: 'success',
+        title: 'Tarea Eliminada Con Exito.',
+        confirmButtonColor: '#27ae60'
+      });
+      }, error => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo eliminar la tarea.',
+        confirmButtonColor: '#c0392b'
+      });
+
+      
     });
   }
 
   completarTarea(id:number): void{
     this.tareaService.completedTarea(id).subscribe(()=>{
+
       this.obtenerTareas();
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Tarea Completada.',
+        confirmButtonColor: '#27ae60'
+      });
+      }, error => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo complear la tarea.',
+        confirmButtonColor: '#c0392b'
+      });
+     
     })
   }
 

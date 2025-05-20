@@ -5,7 +5,7 @@
     </div>
 
     <hr>
-    <button class="btn-create" (click)="abrirModalCrear()">Crear</button>
+    <button class="btn-create" (click)="abrirModalCrear()"> + </button>
 
     <div *ngIf = "mostrarModal" class ="modal-fondo">
     <div class = "modal-contenido">
@@ -23,6 +23,11 @@
 </div>
 
 <ul>
+    <div *ngIf="tareas.length === 0">
+        <li>
+        <h3> No se encontraron tareas</h3>
+        </li>
+    </div>
     <li *ngFor="let tarea of tareas">
         <h3>{{tarea.titulo}}</h3>
         <p>{{tarea.descripcion}}</p>
