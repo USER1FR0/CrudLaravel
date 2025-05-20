@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="search-bar">
+        <input type="text" [(ngModel)] = "busqueda" placeholder="Buscar por Titulo">
+        <button (click) = "buscarTareaByTitulo()"> Buscar </button>
+    </div>
+
+    <hr>
+    <button class="btn-create" (click)="abrirModalCrear()">Crear</button>
+
+    <div *ngIf = "mostrarModal" class ="modal-fondo">
+    <div class = "modal-contenido">
+        <h3 *ngIf="editando"> Editar Tarea</h3>
+        <h3 *ngIf="!editando">Crear Tarea</h3>
+
+        <input [(ngModel)]="formTarea.titulo" placeholder="Titulo" required>
+        <input [(ngModel)]="formTarea.descripcion" placeholder="Descripcion" required>
+        <input type="date" [(ngModel)]="formTarea.fechaEntrega" placeholder="Titulo" required>
+
+        <button *ngIf="editando" (click)="actualizarTarea()">Guardar</button>
+        <button *ngIf="!editando" (click)="crearTarea()">Guardar</button>
+        <button (click)="cerrarModal()">Cancelar</button>
+    </div>
+</div>
+
+<ul>
+    <li *ngFor="let tarea of tareas">
+        <h3>{{tarea.titulo}}</h3>
+        <p>{{tarea.descripcion}}</p>
+        <p>Fecha de entrega: {{tarea.fechaEntrega | date: 'dd-MM-yyyy'}}</p>
+
+        <span class="task-status" 
+        [ngClass]="{'status-pending': !tarea.estado, 'status-completed': tarea.estado}">
+        {{tarea.estado ? 'Completada' : 'Pendiente'}}
+        </span>
+        
+        <div class="task-actions">
+            <button class="btn-edit" (click) = "abrirModalEditar(tarea)"> Editar </button>
+            <button class="btn-delete" (click) = "eliminarTarea(tarea.id!)"> Eliminar</button>
+            <button *ngIf="!tarea.estado" (click)="completarTarea(tarea.id!)"> Marcar como Completada </button>
+        </div>
+    </li>
+</ul>
+</div>
