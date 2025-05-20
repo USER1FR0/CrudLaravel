@@ -6,7 +6,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'], // Puedes poner aquí tu frontend: ej. http://localhost:4200
+    'allowed_origins' => ['*'], 
 
     'allowed_origins_patterns' => [],
 
